@@ -1,0 +1,23 @@
+units metal
+atom_style atomic
+boundary p p p
+
+read_data conf_replicated.lmp
+
+# Example potential
+pair_style deepmd graph-compress.pb
+pair_coeff * * Co Li Mn Ni O
+
+mass 1 58.9332  # Co
+mass 2 6.941    # Li
+mass 3 54.938   # Mn
+mass 4 58.6934  # Ni
+mass 5 15.999   # O
+
+timestep 0.001
+thermo 100
+fix 1 all nvt temp 300 300 0.1
+dump 1 all custom 50 dump.nmc_811_500ksteps_300K.lammpstrj id type x y z
+thermo 100
+thermo_style custom step temp etotal ke pe press
+run 100000

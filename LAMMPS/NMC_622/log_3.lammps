@@ -1,0 +1,179 @@
+LAMMPS (29 Aug 2024)
+  using 2 OpenMP thread(s) per MPI task
+Loaded 1 plugins from /usr/local/envs/deepmd/lib/deepmd_lmp
+units metal
+atom_style atomic
+boundary p p p
+
+read_data conf_replicated.lmp
+Reading data file ...
+  triclinic box = (0 0 0) to (28.429001 4.9240473 28.291201) with tilt (-2.8429 0 0)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (src/domain.cpp:221)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  480 atoms
+  reading velocities ...
+  480 velocities
+  read_data CPU = 0.011 seconds
+
+# Example potential
+pair_style deepmd graph-compress.pb
+Summary of lammps deepmd module ...
+  >>> Info of deepmd-kit:
+  installed to:       /usr/local/envs/deepmd
+  source:             
+  source branch:      HEAD
+  source commit:      36f34ee
+  source commit at:   2025-03-02 14:20:26 +0800
+  support model ver.: 1.1 
+  build variant:      cpu
+  build with tf inc:  /usr/local/envs/deepmd/lib/python3.12/site-packages/tensorflow/include;/usr/local/envs/deepmd/lib/python3.12/site-packages/tensorflow/../../../../include
+  build with tf lib:  /usr/local/envs/deepmd/lib/python3.12/site-packages/tensorflow/libtensorflow_cc.so.2
+  build with pt lib:  torch;torch_library;/usr/local/envs/deepmd/lib/python3.12/site-packages/torch/lib/libc10.so
+  set tf intra_op_parallelism_threads: 0
+  set tf inter_op_parallelism_threads: 0
+  >>> Info of lammps module:
+  use deepmd-kit at:  /usr/local/envs/deepmdpair_coeff * * Co Li Mn Ni O
+
+mass 1 58.9332  # Co
+mass 2 6.941    # Li
+mass 3 54.938   # Mn
+mass 4 58.6934  # Ni
+mass 5 15.999   # O
+
+timestep 0.001
+thermo 100
+fix 1 all nvt temp 300 300 0.1
+dump 1 all custom 50 dump.nmc_622_500ksteps_300K.lammpstrj id type x y z
+thermo 100
+thermo_style custom step temp etotal ke pe press
+run 1000
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- Type Label Framework: https://doi.org/10.1021/acs.jpcb.3c08419
+
+@Article{Gissinger24,
+ author = {Jacob R. Gissinger, Ilia Nikiforov, Yaser Afshar, Brendon Waters, Moon-ki Choi, Daniel S. Karls, Alexander Stukowski, Wonpil Im, Hendrik Heinz, Axel Kohlmeyer, and Ellad B. Tadmor},
+ title = {Type Label Framework for Bonded Force Fields in LAMMPS},
+ journal = {J. Phys. Chem. B},
+ year =    2024,
+ volume =  128,
+ number =  13,
+ pages =   {3282–-3297}
+}
+
+- USER-DEEPMD package:
+
+@article{Wang_ComputPhysCommun_2018_v228_p178,
+  author = {Wang, Han and Zhang, Linfeng and Han, Jiequn and E, Weinan},
+  doi = {10.1016/j.cpc.2018.03.016},
+  url = {https://doi.org/10.1016/j.cpc.2018.03.016},
+  year = 2018,
+  month = {jul},
+  publisher = {Elsevier {BV}},
+  volume = 228,
+  journal = {Comput. Phys. Commun.},
+  title = {{DeePMD-kit: A deep learning package for many-body potential energy representation and molecular dynamics}},
+  pages = {178--184}
+}
+@article{Zeng_JChemPhys_2023_v159_p054801,
+  title  = {{DeePMD-kit v2: A software package for deep potential models}},
+  author =   {Jinzhe Zeng and Duo Zhang and Denghui Lu and Pinghui Mo and Zeyu Li
+         and Yixiao Chen and Mari{\'a}n Rynik and Li'ang Huang and Ziyao Li and 
+         Shaochen Shi and Yingze Wang and Haotian Ye and Ping Tuo and Jiabin
+         Yang and Ye Ding and Yifan Li and Davide Tisi and Qiyu Zeng and Han 
+         Bao and Yu Xia and Jiameng Huang and Koki Muraoka and Yibo Wang and 
+         Junhan Chang and Fengbo Yuan and Sigbj{\o}rn L{\o}land Bore and Chun
+         Cai and Yinnian Lin and Bo Wang and Jiayan Xu and Jia-Xin Zhu and 
+         Chenxing Luo and Yuzhi Zhang and Rhys E A Goodall and Wenshuo Liang
+         and Anurag Kumar Singh and Sikai Yao and Jingchao Zhang and Renata
+         Wentzcovitch and Jiequn Han and Jie Liu and Weile Jia and Darrin M
+         York and Weinan E and Roberto Car and Linfeng Zhang and Han Wang},
+  journal =  {J. Chem. Phys.},
+  volume =   159,
+  issue =    5,  
+  year =    2023,
+  pages  =   054801,
+  doi =      {10.1063/5.0155600},
+}
+@Article{Zeng_arXiv_2025_p2502.19161,
+  annote       = {general purpose},
+    author =   {Jinzhe Zeng and Duo Zhang and Anyang Peng and Xiangyu Zhang and Sensen
+             He and Yan Wang and Xinzijian Liu and Hangrui Bi and Yifan Li and Chun
+             Cai and Chengqian Zhang and Yiming Du and Jia-Xin Zhu and Pinghui Mo
+             and Zhengtao Huang and Qiyu Zeng and Shaochen Shi and Xuejian Qin and
+             Zhaoxi Yu and Chenxing Luo and Ye Ding and Yun-Pei Liu and Ruosong Shi
+             and Zhenyu Wang and Sigbj{\o}rn L{\o}land Bore and Junhan Chang and
+             Zhe Deng and Zhaohan Ding and Siyuan Han and Wanrun Jiang and Guolin
+             Ke and Zhaoqing Liu and Denghui Lu and Koki Muraoka and Hananeh Oliaei
+             and Anurag Kumar Singh and Haohui Que and Weihong Xu and Zhangmancang
+             Xu and Yong-Bin Zhuang and Jiayu Dai and Timothy J. Giese and Weile
+             Jia and Ben Xu and Darrin M. York and Linfeng Zhang and Han Wang},
+    title =    {{DeePMD-kit v3: A Multiple-Backend Framework for Machine Learning
+             Potentials}},
+    journal =  {arXiv},
+    year =     2025,
+    pages =    {2502.19161},
+    doi =      {10.48550/arXiv.2502.19161},
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Generated 0 of 10 mixed pair_coeff terms from geometric mixing rule
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 8
+  ghost atom cutoff = 8
+  binsize = 4, bins = 8 2 8
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair deepmd, perpetual
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 4.477 | 4.477 | 4.477 Mbytes
+   Step          Temp          TotEng         KinEng         PotEng         Press     
+         0   0             -2659.6281      0             -2659.6281      318710.84    
+       100   157.18172     -2658.5384      9.7320023     -2668.2704      306448.44    
+       200   216.65485     -2652.8261      13.414317     -2666.2404      315992.6     
+       300   244.56488     -2651.1851      15.142384     -2666.3275      309798.51    
+       400   294.1448      -2646.0568      18.212154     -2664.2689      310376.29    
+       500   304.43911     -2642.2474      18.849533     -2661.0969      315781.55    
+       600   308.56995     -2640.8559      19.105297     -2659.9612      319561.95    
+       700   302.13567     -2639.9003      18.706914     -2658.6073      332646.89    
+       800   328.60568     -2640.669       20.345821     -2661.0148      328391.93    
+       900   292.2116      -2644.0437      18.092459     -2662.1361      318797.24    
+      1000   339.4418      -2643.3519      21.016746     -2664.3687      310817.19    
+Loop time of 96.717 on 2 procs for 1000 steps with 480 atoms
+
+Performance: 0.893 ns/day, 26.866 hours/ns, 10.339 timesteps/s, 4.963 katom-step/s
+119.4% CPU use with 1 MPI tasks x 2 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 96.572     | 96.572     | 96.572     |   0.0 | 99.85
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.049945   | 0.049945   | 0.049945   |   0.0 |  0.05
+Output  | 0.051726   | 0.051726   | 0.051726   |   0.0 |  0.05
+Modify  | 0.032429   | 0.032429   | 0.032429   |   0.0 |  0.03
+Other   |            | 0.01108    |            |       |  0.01
+
+Nlocal:            480 ave         480 max         480 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           4686 ave        4686 max        4686 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+FullNghs:       121536 ave      121536 max      121536 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 121536
+Ave neighs/atom = 253.2
+Neighbor list builds = 0
+Dangerous builds = 0
+Total wall time: 0:01:40

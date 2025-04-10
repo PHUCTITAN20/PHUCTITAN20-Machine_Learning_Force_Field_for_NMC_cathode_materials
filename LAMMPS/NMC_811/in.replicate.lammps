@@ -1,0 +1,15 @@
+units metal
+atom_style atomic
+boundary p p p
+
+read_data conf.lmp
+replicate 2 2 2
+
+# Add this block before write_data:
+mass 1 58.9332   # Co
+mass 2 6.941     # Li
+mass 3 54.938    # Mn
+mass 4 58.6934   # Ni
+mass 5 15.999    # O
+
+write_data conf_replicated.lmp
